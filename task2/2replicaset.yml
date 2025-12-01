@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: api-rs
+  labels:
+    tier: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: api
+  template:
+    metadata:
+      labels:
+        tier: api
+    spec:
+      containers:
+      - name: spi-container
+        image: hashicorp/http-echo
+
