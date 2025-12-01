@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app: myapp
+spec:
+  initContainers:
+  - name: init-myservice
+    image: busybox:1.28
+    command: ['sh', '-c', 'echo "Downloading data..." > /data/info.txt']
+    volumeMounts:
+    - name: myvol
+      mountPath: /data
+  containers:
+  - name: myapp-container
+    image: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: myvol
+      mountPath: /data
+  volumes:
+  - name: myvol
+    emptyDir: {}
+
